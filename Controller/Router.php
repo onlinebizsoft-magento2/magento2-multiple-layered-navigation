@@ -70,7 +70,10 @@ class Router extends \Magento\UrlRewrite\Controller\Router implements \Magento\F
             return $this->processRedirect($request, $rewrite);
         }
 
-        $this->registry->register('current_category_id', $rewrite->getEntityId());
+        $currentCategoryId = $this->registry->registry('current_category_id');
+         if (!$currentCategoryId) {
+             $this->registry->register('current_category_id', $rewrite->getEntityId());
+         }
         $filterParams = $this->urlHydrator->extract($request->getPathInfo());
         if (empty($filterParams)) {
             return null;
