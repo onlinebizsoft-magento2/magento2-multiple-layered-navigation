@@ -59,8 +59,8 @@ class Router extends \Magento\UrlRewrite\Controller\Router implements \Magento\F
             return $parentMatch;
         }
 
-        $filterString = '/' . $this->urlHydrator->getFilterString($request->getPathInfo());
-        $originalPath = preg_replace('%' . $filterString . '(?!.*' . $filterString . '.*)%', '', $request->getPathInfo());
+        $filterString = urldecode('/' . $this->urlHydrator->getFilterString($request->getPathInfo()));
+        $originalPath = preg_replace('%' . $filterString . '(?!.*' . $filterString . '.*)%', '', urldecode($request->getPathInfo()));
 
         $rewrite = $this->getRewrite($originalPath, $this->storeManager->getStore()->getId());
         if ($rewrite === null) {
